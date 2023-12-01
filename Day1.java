@@ -11,13 +11,13 @@ import java.util.stream.Stream;
 public class Day1 {
     /**
      * Read a text file into a String array
-     * @param filename the input file
+     *
      * @return list of Strings holding each line of the file
      */
-    public ArrayList<String> readFile(String filename) {
+    private ArrayList<String> readFile() {
         ArrayList<String> fileContent = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            BufferedReader reader = new BufferedReader(new FileReader("input/day1.txt"));
             String line;
             while( (line = reader.readLine()) != null) {
                 fileContent.add(line);
@@ -35,7 +35,7 @@ public class Day1 {
      * @param line string containing the digit(s)
      * @return a 2 digit integer.
      */
-    public int processDigits(String line){
+    private int processDigits(String line){
         int first = 0, last = 0;
 
         // Find the first digit
@@ -62,7 +62,7 @@ public class Day1 {
      * @param line the line which may contain the digits
      * @return a 2 digit number as an integer
      */
-    public int processTextAndDigits(String line) {
+    private int processTextAndDigits(String line) {
         Map<String, Integer> digits = Stream.of(new Object[][] {
                 {"zero", 0},  {"0", 0},
                 {"one", 1},   {"1", 1},
@@ -98,7 +98,7 @@ public class Day1 {
     }
 
     public void run() {
-        ArrayList<String> fileContent = readFile("input/day1.txt");
+        ArrayList<String> fileContent = readFile();
         int sum = 0;
         int sum2 = 0;
         for( String line : fileContent ){
