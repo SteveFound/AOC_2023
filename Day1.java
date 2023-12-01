@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 public class Day1 {
     /**
      * Read a text file into a String array
-     * @param filename
-     * @return array of Strings holding each line of the file
+     * @param filename the input file
+     * @return list of Strings holding each line of the file
      */
     public ArrayList<String> readFile(String filename) {
         ArrayList<String> fileContent = new ArrayList<>();
@@ -56,10 +56,8 @@ public class Day1 {
 
     /**
      * Looks for the first and last word representations of digits or digits and returns them as a 2
-     * digit number.
-     *
-     * The problem with the method I have used is that each line has to be checked 40 times. 20 times for
-     * the first digit and 20 times for the last digit... which is pretty awful.
+     * digit number. The problem with the method I have used is that each line has to be checked 40 times.
+     * 20 times for the first digit and 20 times for the last digit... which is pretty awful.
      *
      * @param line the line which may contain the digits
      * @return a 2 digit number as an integer
