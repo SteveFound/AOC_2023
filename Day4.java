@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -62,20 +63,6 @@ public class Day4 {
     }
 
     /**
-     * increase a list element by a set amount. If the element does not exist, create it.
-     * @param list list of Integers
-     * @param index index of integer to increase
-     * @param amount amount to increase the value by
-     */
-    private void increaseBy(List<Integer> list, int index, int amount) {
-        if( index >= list.size() ){
-            list.add(index, amount);
-        } else {
-            list.set(index, list.get(index) + amount);
-        }
-    }
-
-    /**
      * I'm not going to even try and explain how this works ... It basically counts a pile
      * of cards that is created by some ridiculous rules in AOC-23
      * @param cards A list of all the cards
@@ -83,17 +70,20 @@ public class Day4 {
      */
     private int countPile(List<Card> cards) {
         List<Integer> pile = new ArrayList<>();
+        // Add a 1 for each original card
+        cards.forEach(i -> pile.add(1));
 
         int cardId = 0;
         for( Card current : cards ) {
-            // The current card is the original
-            increaseBy(pile, cardId, 1);
             // Find how many numbers match
             int count = current.matching();
-            // For the number of cards that match, following the current card, add the number
-            // of cards in the current cards pile.
+            // For the number of cards that match, following the current card,
+            // add the number of cards in the current cards pile.
+            int index = cardId;
+            int amount = pile.get(cardId);
             for (int idx = 0; idx < count; idx++) {
-                increaseBy(pile, cardId + idx + 1, pile.get(cardId));
+                index++;
+                pile.set(index, pile.get(index) + amount);
             }
             cardId++;
         }
