@@ -78,14 +78,8 @@ public class Day1 {
         }).collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
         ArrayList<String> fileContent = readFile();
-        int sum = 0;
-        int sum2 = 0;
-        for( String line : fileContent ){
-            // Check for digits only
-            sum += firstAndLast(line, digits);
-            // Check for words or digits
-            sum2 += firstAndLast(line, wordsAndDigits);
-        }
+        int sum = fileContent.stream().mapToInt(line -> firstAndLast(line,digits)).sum();
+        int sum2 = fileContent.stream().mapToInt(line -> firstAndLast(line, wordsAndDigits)).sum();
         System.out.println("Digits Sum : " + sum);
         System.out.println("Text and Digits sum : " + sum2);
     }
