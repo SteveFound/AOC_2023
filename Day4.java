@@ -9,10 +9,18 @@ import java.util.stream.Collectors;
 
 public class Day4 {
     private record Card(String id, List<Integer> winning, List<Integer> present) {
+        /**
+         * count how many numbers are in both lists
+         * @return the number of numbers in both lists
+         */
         public int matching() {
             return (int)present.stream().filter(winning::contains).count();
         }
 
+        /**
+         * Calculate a card score.
+         * @return 2 ^ the number of matching numbers or 0 if there are none.
+         */
         public int score() {
             // Count how many numbers are in both the winning and present lists.
             int count = matching();
