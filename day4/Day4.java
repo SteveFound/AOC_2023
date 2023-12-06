@@ -1,13 +1,14 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+package day4;
+
+import util.Day;
+import util.FileLoader;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class Day4 {
+public class Day4 implements Day {
     private record Card(String id, List<Integer> winning, List<Integer> present) {
         /**
          * count how many numbers are in both lists
@@ -27,27 +28,6 @@ public class Day4 {
             if( count == 0 ) return 0;
             return 1 << (count - 1);
         }
-    }
-
-    /**
-     * Read a text file into a String array
-     *
-     * @return list of Strings holding each line of the file
-     */
-    private ArrayList<String> readFile() {
-        ArrayList<String> fileContent = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("input/day4.txt"));
-            String line;
-            while( (line = reader.readLine()) != null) {
-                fileContent.add(line);
-            }
-            reader.close();
-        }
-        catch( IOException ioe ) {
-            ioe.printStackTrace();
-        }
-        return fileContent;
     }
 
     /**
@@ -100,7 +80,7 @@ public class Day4 {
     }
 
     public void run() {
-        ArrayList<String> fileContent = readFile();
+        List<String> fileContent = FileLoader.readFile("input/day4.txt");
         // Convert each line of input into a Card record
         List<Card> cards = fileContent.stream().map(this::parseLine).toList();
         // Sum the scores of all the cards

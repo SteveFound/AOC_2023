@@ -1,13 +1,16 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+package day3;
+
+import util.Day;
+import util.FileLoader;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.abs;
 
-public class Day3 {
+public class Day3 implements Day {
 
     /**
      * Define a symbol
@@ -47,33 +50,13 @@ public class Day3 {
     private record GearPart( Symbol symbol, int value) {}
 
     /**
-     * read a file into an array of strings
-     * @return list of strings
-     */
-    private ArrayList<String> readFile() {
-        ArrayList<String> fileContent = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("input/day3.txt"));
-            String line;
-            while( (line = reader.readLine()) != null) {
-                fileContent.add(line);
-            }
-            reader.close();
-        }
-        catch( IOException ioe ) {
-            ioe.printStackTrace();
-        }
-        return fileContent;
-    }
-
-    /**
      * Extract all the symbols from a string grid representation. Each line is a grid row and
      * each character is a grid column.
      * @param fileContent the grid representation
      * @return list of all symbols found in the grid with their coordinates
      */
-    private ArrayList<Symbol> extractSymbols(ArrayList<String> fileContent) {
-        ArrayList<Symbol> symbols = new ArrayList<>();
+    private List<Symbol> extractSymbols(List<String> fileContent) {
+        List<Symbol> symbols = new ArrayList<>();
         int row = 0;
         char chr;
         for( String line : fileContent ){
@@ -97,7 +80,7 @@ public class Day3 {
      * @param symbols list of all symbols found in the grid with their coordinates
      * @return sum of all the gears
      */
-    private int sumGears(ArrayList<String> fileContent, ArrayList<Symbol> symbols){
+    private int sumGears(List<String> fileContent, List<Symbol> symbols){
         // A GearPart is the first half of a possible gear number pair
         ArrayList<GearPart> gearParts = new ArrayList<>();
         int sum = 0;
@@ -151,7 +134,7 @@ public class Day3 {
      * @param symbols list of all symbols found in the grid with their coordinates
      * @return sum of all the numbers touched by symbols
      */
-    private int sumSymbolledNumbers(ArrayList<String> fileContent, ArrayList<Symbol> symbols){
+    private int sumSymbolledNumbers(List<String> fileContent, List<Symbol> symbols){
         int sum = 0;
         int row = 0;
         String nbr;
@@ -175,12 +158,9 @@ public class Day3 {
         }
         return sum;
     }
-
-
-
     public void run() {
-        ArrayList<String> fileContent = readFile();
-        ArrayList<Symbol> symbols = extractSymbols(fileContent);
+        List<String> fileContent = FileLoader.readFile("input/day3.txt");
+        List<Symbol> symbols = extractSymbols(fileContent);
         System.out.println("Part 1: " + sumSymbolledNumbers(fileContent, symbols));
         System.out.println("Part 2: " + sumGears(fileContent, symbols));
     }

@@ -1,3 +1,8 @@
+package day5;
+
+import util.Day;
+import util.FileLoader;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,7 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class Day5 {
+public class Day5 implements Day {
     /**
      * Create a Mapper to map a source value to a destination value and vice versa
      * @param source  Sourcr value
@@ -114,26 +119,6 @@ public class Day5 {
         }
     }
 
-    /**
-     * read a file into an array of strings
-     * @return list of strings
-     */
-    private ArrayList<String> readFile() {
-        ArrayList<String> fileContent = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("input/day5.txt"));
-            String line;
-            while( (line = reader.readLine()) != null) {
-                fileContent.add(line);
-            }
-            reader.close();
-        }
-        catch( IOException ioe ) {
-            ioe.printStackTrace();
-        }
-        return fileContent;
-    }
-
     private List<Mapping> createMappings(List<String> fileInput) {
         List<Mapping> mappings = new ArrayList<>();
         String line;
@@ -157,11 +142,10 @@ public class Day5 {
         return mappings;
     }
 
-    private long part1() {
-        List<String> lines = readFile();
-        String seedLine = lines.get(0).split(":")[1].trim();
+    private long part1(List<String> fileContent) {
+        String seedLine = fileContent.get(0).split(":")[1].trim();
         long[] seeds = Arrays.stream(seedLine.split("\s+")).mapToLong(Long::parseLong).toArray();
-        List<Mapping> maps = createMappings(lines);
+        List<Mapping> maps = createMappings(fileContent);
 
         long min = Long.MAX_VALUE;
         for (long seed : seeds) {
@@ -174,15 +158,14 @@ public class Day5 {
         return min;
     }
 
-    private long part2() {
-        List<String> lines = readFile();
-        String seedLine = lines.get(0).split(":")[1].trim();
+    private long part2( List<String> fileContent) {
+        String seedLine = fileContent.get(0).split(":")[1].trim();
         long[] seeds = Arrays.stream(seedLine.split("\s+")).mapToLong(Long::parseLong).toArray();
         List<SeedRange> seedList = new ArrayList<>();
         for (int i = 0; i + 1 < seeds.length; i += 2) {
             seedList.add(new SeedRange(seeds[i], seeds[i + 1]));
         }
-        List<Mapping> maps = createMappings(lines);
+        List<Mapping> maps = createMappings(fileContent);
 
         // Get the maximum location value
         long max = maps.get(maps.size() - 1).getMax();
@@ -202,7 +185,8 @@ public class Day5 {
     }
 
     public void run() {
-        System.out.println(part1());
-        System.out.println(part2());
+        List<String> fileContent = FileLoader.readFile("input/day5.txt");
+        System.out.println(part1(fileContent));
+        System.out.println(part2(fileContent));
     }
 }

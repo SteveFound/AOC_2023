@@ -1,33 +1,18 @@
+package day1;
+
+import util.Day;
+import util.FileLoader;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Day1 {
-    /**
-     * Read a text file into a String array
-     *
-     * @return list of Strings holding each line of the file
-     */
-    private ArrayList<String> readFile() {
-        ArrayList<String> fileContent = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("input/day1.txt"));
-            String line;
-            while( (line = reader.readLine()) != null) {
-                fileContent.add(line);
-            }
-            reader.close();
-        }
-        catch( IOException ioe ) {
-            ioe.printStackTrace();
-        }
-        return fileContent;
-    }
-
+public class Day1 implements Day {
     /**
      * Find the values of the first and last elements of a text digit representation in a string and
      * return it as a 2 digit integer.
@@ -77,7 +62,7 @@ public class Day1 {
                 {"nine", 9},  {"9", 9}
         }).collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
-        ArrayList<String> fileContent = readFile();
+        List<String> fileContent = FileLoader.readFile("input/day1.txt");
         int sum = fileContent.stream().mapToInt(line -> firstAndLast(line,digits)).sum();
         int sum2 = fileContent.stream().mapToInt(line -> firstAndLast(line, wordsAndDigits)).sum();
         System.out.println("Digits Sum : " + sum);

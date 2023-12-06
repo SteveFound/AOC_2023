@@ -1,13 +1,16 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+package day2;
+
+import util.Day;
+import util.FileLoader;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.max;
 
-public class Day2 {
+public class Day2 implements Day {
 
     /**
      * Record to hold the data of a single game part
@@ -19,27 +22,6 @@ public class Day2 {
     private record Game(int id, int red, int green, int blue){}
 
     /**
-     * Read a text file into a String array
-     *
-     * @return list of Strings holding each line of the file
-     */
-    private ArrayList<String> readFile() {
-        ArrayList<String> fileContent = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("input/day2.txt"));
-            String line;
-            while( (line = reader.readLine()) != null) {
-                fileContent.add(line);
-            }
-            reader.close();
-        }
-        catch( IOException ioe ) {
-            ioe.printStackTrace();
-        }
-        return fileContent;
-    }
-
-    /**
      * Take an array of game definitions and sum the id's of the valid games. For a game to be
      * valid, it's cube usage cannot exceed the maximum number provided in any one part.
      * @param gameDefs String array holding the game definitions, one per line
@@ -48,7 +30,7 @@ public class Day2 {
      * @param maxBlue maximum number of blue cubes that can be used
      * @return the sum of the ID's of the valid games given a maximum for each cube colour.
      */
-    private int sumValidGameIds(ArrayList<String> gameDefs, int maxRed, int maxGreen, int maxBlue) {
+    private int sumValidGameIds(List<String> gameDefs, int maxRed, int maxGreen, int maxBlue) {
         int sum = 0;
         for( String gameDef : gameDefs ){
             // each definition starts with 'Game <id>:'
@@ -77,7 +59,7 @@ public class Day2 {
      * @param gameDefs String array holding the game definitions, one per line
      * @return the sum of the powers for each game.
      */
-    private int sumPowers(ArrayList<String> gameDefs ){
+    private int sumPowers(List<String> gameDefs ){
         int sum = 0;
 
         for( String gameDef : gameDefs ){
@@ -159,7 +141,7 @@ public class Day2 {
     }
 
     public void run() {
-        ArrayList<String> gameDefs = readFile();
+        List<String> gameDefs = FileLoader.readFile("input/day2.txt");
         System.out.println("Part 1:" + sumValidGameIds(gameDefs, 12, 13, 14));
         System.out.println("Part 2:" + sumPowers(gameDefs));
     }
