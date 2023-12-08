@@ -42,8 +42,7 @@ public class Day7 implements Day {
             String faces = joker ? "J23456789TQKA" : "23456789TJQKA";
             int[] faceCount = new int[13];
             int jokers = 0;
-            // reverse the hand (so least significant card is first) and turn it into characters
-            char[] cards = new StringBuilder(hand).reverse().toString().toCharArray();
+            char[] cards = hand.toCharArray();
 
             // Count the number of each card we have
             for (Character card : cards) {
@@ -56,11 +55,16 @@ public class Day7 implements Day {
             }
 
             int total = 0;
+            // search for fives
             for (int count : faceCount) {
-                // five of a kind
                 if (count + jokers == 5) return HandType.FIVE;
-                // four of a kind
+            }
+            // search for fours
+            for (int count : faceCount) {
                 if (count + jokers == 4) return HandType.FOUR;
+            }
+            // search for the rest
+            for (int count : faceCount) {
                 // three of a kind (or full house) ignoring jokers
                 if (count == 3) total += 3;
                 // a pair... ignoring jokers
@@ -75,7 +79,7 @@ public class Day7 implements Day {
             if (total == 5) return HandType.FULL_HOUSE;
             // We have a three, a pair and joker or a high card and two jokers
             if (total == 3) return HandType.THREE;
-            // We have two pairs we can't have any jokers or it would have made a THREE
+            // We have two pairs we can't have any jokers or it would have made a full house
             if (total == 4) return HandType.TWO_PAIR;
             // We have a pair or a high card and a joker
             if (total == 2) return HandType.PAIR;
