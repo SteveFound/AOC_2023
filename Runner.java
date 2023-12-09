@@ -5,11 +5,12 @@ import day4.Day4;
 import day5.Day5;
 import day6.Day6;
 import day7.Day7;
+import day8.Day8;
 import util.Day;
 
 public class Runner {
     public static void main(String[] args) {
-        Day day = new Day7();
+        Day day = new Day8();
         day.run();
     }
 }
