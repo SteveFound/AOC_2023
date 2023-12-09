@@ -29,11 +29,9 @@ public class Day9 implements Day {
      */
     private int getNextNumber(List<Integer> sequence) {
         List<Integer> differences = getDifferences(sequence);
-        if (differences.stream().anyMatch(x -> x != 0)) {
+        if (differences.stream().anyMatch(x -> x != 0))
             return sequence.get(sequence.size() - 1) + getNextNumber(differences);
-        } else {
-            return sequence.get(sequence.size() - 1);
-        }
+        return sequence.get(sequence.size() - 1);
     }
 
     /**
@@ -48,19 +46,11 @@ public class Day9 implements Day {
     }
 
     private long part1(List<List<Integer>> fileContent ){
-        long sum = 0;
-        for( List<Integer> line : fileContent ){
-            sum += getNextNumber(line);
-        }
-        return sum;
+        return fileContent.stream().mapToLong(this::getNextNumber).sum();
     }
 
     private long part2(List<List<Integer>> fileContent ) {
-        long sum = 0;
-        for( List<Integer> line : fileContent ){
-            sum += getPreviousNumber(line);
-        }
-        return sum;
+        return fileContent.stream().mapToLong(this::getPreviousNumber).sum();
     }
 
     @Override
